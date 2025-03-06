@@ -13,7 +13,7 @@ public static class BoxMappingExtensions
             Y = box.Y ?? 0,
             Color = box.Color.Trim(),
             Row = box.Row ?? 0,
-            IsNewLayer = box.IsNewLayer,
+            IsNewLayer = box.IsNewLayer ?? false,
             CurrentPositionX = box.CurrentPositionX ?? 0,
             CurrentPositionY = box.CurrentPositionY ?? 0
         };

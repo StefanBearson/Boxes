@@ -16,7 +16,7 @@ public class BoxVM
     [JsonPropertyName("row")]
     public int? Row { get; set; } = 0;
     [JsonPropertyName("isNewLayer")]
-    public bool IsNewLayer { get; set; }
+    public bool? IsNewLayer { get; set; }
     [JsonPropertyName("currentPositionX")]
     public int? CurrentPositionX { get; set; } = 0;
     [JsonPropertyName("currentPositionY")]

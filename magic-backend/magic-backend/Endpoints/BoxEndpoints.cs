@@ -13,38 +13,35 @@ public class BoxEndpoints
     {
         var group = app.MapGroup("").WithTags("Box");
 
-        group.MapGet("/boxes", GetBoxes)
+        group.MapGet("/box", GetBoxes)
             .WithName("GetBoxes")
-            .WithDescription("Get all magic boxes from the database");
+            .WithDescription("Get all boxes from the database.");
         group.MapPost("/box", AddBox)
             .WithName("AddBox")
-            .WithDescription("Add a new magic box to the database")
+            .WithDescription("Add a new box to the database.")
             .AddEndpointFilter<ValidationFilter<BoxVM>>()
             .ProducesValidationProblem();
-        group.MapDelete("/boxes", RemoveAllBoxes)
+        group.MapDelete("/box", RemoveAllBoxes)
             .WithName("RemoveAllBoxes")
-            .WithDescription("Remove all magic boxes from the database");
+            .WithDescription("Remove all boxes from the database.");
     }
     
-    private static async Task<IResult> AddBox([FromBody] BoxVM box, IBoxService boxService)
+private static async Task<IResult> AddBox([FromBody] BoxVM box, IBoxService boxService)
     {
-        BoxDTO boxDto = box.ToDTO();
-        boxService.AddBox(boxDto);
-
-        return Results.Ok(box.ToDTO());
+        var boxDto = box.ToDTO();
+        await boxService.AddBox(boxDto);
+        return Results.Ok(boxDto);
     }
     
     private static async Task<IResult> GetBoxes(IBoxService boxService)
     {
         var result = boxService.GetBoxes();
-
         return Results.Ok(result.Result.Select(box => box.ToVM()));
     }
     
     private static async Task<IResult> RemoveAllBoxes(IBoxService boxService)
     {
-        boxService.RemoveAllBoxes();
-
+        await boxService.RemoveAllBoxes();
         return Results.Ok("All boxes removed");
     }
     
