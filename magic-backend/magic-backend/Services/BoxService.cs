@@ -4,11 +4,10 @@ using magic_backend.Models;
 
 namespace magic_backend.Services;
 
-public class BoxService(BoxDbContext context) : IBoxService
+public class BoxService(BoxDbContext context, ILogger<BoxService> logger) : IBoxService
 {
     public Task<string> AddBox(BoxDTO box)
     {
-
         var entity = context.Add(box.ToEntity());
         context.SaveChanges();
         
@@ -20,6 +19,8 @@ public class BoxService(BoxDbContext context) : IBoxService
         var boxes = context.Box
             .Select(b => b.ToDTO())
             .ToList();
+        
+        logger.LogInformation($"{boxes.Count} boxes found"); 
         
         return Task.FromResult(boxes);
     }

@@ -8,14 +8,14 @@ public static class BoxMappingExtensions
     {
         return new BoxDTO
         {
-            Key = box.Key,
-            X = box.X,
-            Y = box.Y,
-            Color = box.Color,
-            Row = box.Row,
+            Key = box.Key ?? 0,
+            X = box.X ?? 0,
+            Y = box.Y ?? 0,
+            Color = box.Color.Trim(),
+            Row = box.Row ?? 0,
             IsNewLayer = box.IsNewLayer,
-            CurrentPositionX = box.CurrentPositionX,
-            CurrentPositionY = box.CurrentPositionY
+            CurrentPositionX = box.CurrentPositionX ?? 0,
+            CurrentPositionY = box.CurrentPositionY ?? 0
         };
     }
     
