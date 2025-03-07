@@ -41,7 +41,7 @@ function App() {
       if (last) {
         setRows(isOnLastRow ? highestX : highestX + 1);
         setIsNewLayer(shouldBeNewLayer);
-        setCurrentPosition({ x: last.currentPositionX, y: last.currentPositionY });
+        setCurrentPosition({ x: last.x, y: last.y });
       } else {
         setRows(1);
         setIsNewLayer(false);
@@ -78,8 +78,6 @@ function App() {
       color: getRandomColor(),
       row: rows,
       isNewLayer,
-      currentPositionX: x,
-      currentPositionY: y
     };
 
     setGrid(prevGrid => {

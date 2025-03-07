@@ -5,6 +5,4 @@ export interface BoxProps {
   color: string,
   row: number,
   isNewLayer: boolean,
-  currentPositionX: number,
-  currentPositionY: number,
 }
