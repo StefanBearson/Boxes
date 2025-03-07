@@ -1,9 +1,12 @@
 # Backend
 ## Start
-Dotnet run or within VS Code, Visual Studio or Rider.
+Dotnet run or run it within VS Code, Visual Studio or Rider.
 
 # Frontend
 
 ## Start
-npm run dev
+1. npm install
+2. npm run dev
+
+For the frontend to work properly, it needs that the Backend Api is started and runs on http://localhost:5052.
 
