@@ -3,6 +3,7 @@ using magic_backend.Data;
 using magic_backend.Endpoints;
 using magic_backend.ExceptionHandler;
 using magic_backend.Middlewares;
+using magic_backend.Repositorys;
 using magic_backend.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,11 +12,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddScoped<IBoxService, BoxService>();
 
+if (builder.Configuration.GetValue<bool>("UseJsonAsDatabase"))
+{
+    builder.Services.AddScoped<IBoxRepository, BoxJsonRepository>();
+}
+else
+{
+    builder.Services.AddScoped<IBoxRepository, BoxEFRepository>();
+    builder.Services.AddDbContext<BoxDbContext>(options =>
+        options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("BoxDb") ?? string.Empty));
+}
+
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-
-builder.Services.AddDbContext<BoxDbContext>(options =>
-    options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("BoxDb") ?? string.Empty));
 
 builder.Services.AddCors(options =>
 {
