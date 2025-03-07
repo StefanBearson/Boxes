@@ -17,7 +17,13 @@ function App() {
   const [snackbarData, setSnackbarData] = useState({isVisable: false, message: ""});
 
   const deleteSaveOnDb = async () => {
-    await axios.delete("http://localhost:5052/box")
+    try {
+      await axios.delete("http://localhost:5052/box")
+      setSnackbarData({isVisable: true, message: "All boxes cleared!"});
+    } catch {
+      setSnackbarData({isVisable: true, message: "No connection to the API!"});
+    }
+    
   }
 
   const loadGridFromDb = async () => {
@@ -47,8 +53,10 @@ function App() {
         setIsNewLayer(false);
         setCurrentPosition({ x: 0, y: 0 });
       }
+      setSnackbarData({isVisable: true, message: "Last session loaded!"});
     } catch (error) {
-      console.log(error);
+      setSnackbarData({isVisable: true, message: "No connection to the API!"});
+      console.error(error);
     }
   }
 
@@ -58,8 +66,10 @@ function App() {
       await axios.post("http://localhost:5052/box", box, {
         headers: { 'Content-Type': 'application/json' }
       });
+      setSnackbarData({isVisable: true, message: "Box added!"});
     } catch (error) {
-      console.log(error);
+      setSnackbarData({isVisable: true, message: "Box added! But not saved because no connection to the API!"});
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -110,7 +120,6 @@ function App() {
 
   const handleAddBoxClick = () => {
     if(isLoading) return;
-    setSnackbarData({isVisable: true, message: "Box added!"});
     theMagic();
   }
 
@@ -121,11 +130,9 @@ function App() {
     setCurrentPosition({x : 0, y:  0})
     setIsNewLayer(false)
     setRows(1)
-    setSnackbarData({isVisable: true, message: "All boxes cleared!"});
   }
 
   const handleLoadLastSessionClick = () => {
-    setSnackbarData({isVisable: true, message: "Last session loaded!"});
     loadGridFromDb();
   }
 
