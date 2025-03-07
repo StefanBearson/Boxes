@@ -93,8 +93,6 @@ function App() {
   }
 
   const theMagic = () => {
-    if (grid.flat().length === 100) return;
-
     if (!grid.length) {
       deleteSaveOnDb();
       setSnackbarData({isVisable: true, message: "First box added! Your saved Session is cleared"});
