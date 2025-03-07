@@ -22,6 +22,6 @@ public class BoxService(IBoxRepository repository, ILogger<BoxService> logger) :
     public Task RemoveAllBoxes()
     {
         var result = repository.RemoveAllBoxes();
-        return result;
+        return result.Result;
     }
 }

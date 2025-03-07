@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "magic-backend", "magic-backend\magic-backend.csproj", "{5C0F158F-7747-4ECF-A8B6-F64F0CB24B66}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "magic-backend.Tests", "magic-backend.Tests\magic-backend.Tests.csproj", "{B70AAC5F-4F10-4999-ABF3-3B27DECFA2CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{5C0F158F-7747-4ECF-A8B6-F64F0CB24B66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C0F158F-7747-4ECF-A8B6-F64F0CB24B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C0F158F-7747-4ECF-A8B6-F64F0CB24B66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B70AAC5F-4F10-4999-ABF3-3B27DECFA2CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B70AAC5F-4F10-4999-ABF3-3B27DECFA2CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B70AAC5F-4F10-4999-ABF3-3B27DECFA2CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B70AAC5F-4F10-4999-ABF3-3B27DECFA2CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
