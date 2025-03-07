@@ -30,101 +30,30 @@ public class BoxEndpoints
         group.MapPost("/box", AddBox)
             .WithName("AddBox")
             .WithDescription("Add a new box to the database.")
-            // .WithOpenApi(operation => new(operation)
-            // {
-            //     Summary = "Create a new box",
-            //     Description = "This will add a new box to the database.",
-            //     Parameters =
-            //     [
-            //         new()
-            //         {
-            //             Name = "key",
-            //             Description = "Unique identifier for the box.",
-            //             Required = true,
-            //             Schema = new OpenApiSchema
-            //             {
-            //                 Type = "integer",
-            //             }
-            //         },
-            //         new()
-            //         {
-            //             Name = "x",
-            //             Description = "The x position of the box.",
-            //             Required = true,
-            //             Schema = new OpenApiSchema
-            //             {
-            //                 Type = "integer",
-            //             }
-            //         },
-            //         new()
-            //         {
-            //             Name = "y",
-            //             Description = "The y position of the box.",
-            //             Required = true,
-            //             Schema = new OpenApiSchema
-            //             {
-            //                 Type = "integer",
-            //             }
-            //         },
-            //         new()
-            //         {
-            //             Name = "color",
-            //             Description = "The Color of the box. in hex format. (e.g. #000000)",
-            //             Required = true,
-            //             Schema = new OpenApiSchema
-            //             {
-            //                 Type = "string",
-            //             }
-            //         },
-            //         new()
-            //         {
-            //             Name = "row",
-            //             Description = "The row in the the grid for the box. Important for the algorithm in the frontend.",
-            //             Required = true,
-            //             Schema = new OpenApiSchema
-            //             {
-            //                 Type = "integer",
-            //             }
-            //         },
-            //         new()
-            //         {
-            //             Name = "isNewLayer",
-            //             Description = "Is the box on a new layer. This is for the algorithm in the frontend to know if the box is on a new layer or not.",
-            //             Required = true,
-            //             Schema = new OpenApiSchema
-            //             {
-            //                 Type = "boolean",
-            //             }
-            //         },
-            //         new()
-            //         {
-            //             Name = "currentPositionX",
-            //             Description = "The current x position of the box. This is for the algorithm in the frontend to know the current position of the box.",
-            //             Required = true,
-            //             
-            //             Schema = new OpenApiSchema
-            //             {
-            //                 Type = "integer",
-            //             }
-            //         },
-            //         new()
-            //         {
-            //             Name = "currentPositionY",
-            //             Description = "The current y position of the box. This is for the algorithm in the frontend to know the current position of the box.",
-            //             Required = true,
-            //             Schema = new OpenApiSchema
-            //             {
-            //                 Type = "integer",
-            //             }
-            //         },
-            //     ],
-            //     Responses =
-            //     {
-            //         ["200"] = new OpenApiResponse { Description = "Add box returned successfully." },
-            //         ["400"] = new OpenApiResponse { Description = "The request is invalid." },
-            //         ["500"] = new OpenApiResponse { Description = "An unexpected error occurred." }
-            //     }
-            // })
+            .WithOpenApi(operation => new(operation)
+            {
+                Summary = "Create a new box",
+                Description = "This will add a new box to the database.",
+                RequestBody = new OpenApiRequestBody
+                {
+                    Content =
+                    {
+                        ["application/json"] = new OpenApiMediaType
+                        {
+                            Schema = new OpenApiSchema
+                            {
+                                Reference = new OpenApiReference { Type = ReferenceType.Schema, Id = "BoxVM" }
+                            }
+                        }
+                    }
+                },
+                Responses =
+                {
+                    ["200"] = new OpenApiResponse { Description = "Add box returned successfully." },
+                    ["400"] = new OpenApiResponse { Description = "The request is invalid." },
+                    ["500"] = new OpenApiResponse { Description = "An unexpected error occurred." }
+                }
+            })
             .AddEndpointFilter<ValidationFilter<BoxVM>>()
             .ProducesValidationProblem();
         group.MapDelete("/box", RemoveAllBoxes)
