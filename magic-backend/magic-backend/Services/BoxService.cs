@@ -7,9 +7,9 @@ namespace magic_backend.Services;
 
 public class BoxService(IBoxRepository repository, ILogger<BoxService> logger) : IBoxService
 {
-    public Task<string> AddBox(BoxDTO box)
+    public Task<string> CreateBox(BoxDTO box)
     {
-        var result = repository.AddBox(box);
+        var result = repository.CreateBox(box);
         return result;
     }
     

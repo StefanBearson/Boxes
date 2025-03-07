@@ -7,7 +7,7 @@ namespace magic_backend.Repositorys;
 
 public class BoxEFRepository(BoxDbContext context, ILogger<BoxService> logger) : IBoxRepository
 {
-    public Task<string> AddBox(BoxDTO box)
+    public Task<string> CreateBox(BoxDTO box)
     {
         var entity = context.Add(box.ToEntity());
         context.SaveChanges();

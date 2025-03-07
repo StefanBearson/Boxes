@@ -13,9 +13,7 @@ public static class BoxMappingExtensions
             Y = box.Y ?? 0,
             Color = box.Color.Trim(),
             Row = box.Row ?? 0,
-            IsNewLayer = box.IsNewLayer ?? false,
-            CurrentPositionX = box.CurrentPositionX ?? 0,
-            CurrentPositionY = box.CurrentPositionY ?? 0
+            IsNewLayer = box.IsNewLayer ?? false
         };
     }
     
@@ -28,9 +26,7 @@ public static class BoxMappingExtensions
             Y = box.Y,
             Color = box.Color,
             Row = box.Row,
-            IsNewLayer = box.IsNewLayer,
-            CurrentPositionX = box.CurrentPositionX,
-            CurrentPositionY = box.CurrentPositionY
+            IsNewLayer = box.IsNewLayer
         };
     }
     
@@ -43,9 +39,7 @@ public static class BoxMappingExtensions
             Y = box.Y,
             Color = box.Color,
             Row = box.Row,
-            IsNewLayer = box.IsNewLayer,
-            CurrentPositionX = box.CurrentPositionX,
-            CurrentPositionY = box.CurrentPositionY
+            IsNewLayer = box.IsNewLayer
         };
     }
     
@@ -58,9 +52,7 @@ public static class BoxMappingExtensions
             Y = box.Y,
             Color = box.Color,
             Row = box.Row,
-            IsNewLayer = box.IsNewLayer,
-            CurrentPositionX = box.CurrentPositionX,
-            CurrentPositionY = box.CurrentPositionY
+            IsNewLayer = box.IsNewLayer
         };
     }
 }

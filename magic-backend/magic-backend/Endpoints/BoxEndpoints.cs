@@ -27,7 +27,7 @@ public class BoxEndpoints
                     ["400"] = new OpenApiResponse { Description = "The request is invalid." }
                 }
             });
-        group.MapPost("/box", AddBox)
+        group.MapPost("/box", CreateBox)
             .WithName("AddBox")
             .WithDescription("Add a new box to the database.")
             .WithOpenApi(operation => new(operation)
@@ -70,10 +70,10 @@ public class BoxEndpoints
             });
     }
     
-private static async Task<IResult> AddBox([FromBody] BoxVM box, IBoxService boxService)
+private static async Task<IResult> CreateBox([FromBody] BoxVM box, IBoxService boxService)
     {
         var boxDto = box.ToDTO();
-        await boxService.AddBox(boxDto);
+        await boxService.CreateBox(boxDto);
         return Results.Ok(boxDto);
     }
     
@@ -94,8 +94,6 @@ private static async Task<IResult> AddBox([FromBody] BoxVM box, IBoxService boxS
         public AddBoxValidator()
         { 
             RuleFor(x => x.Color).NotEmpty();
-            RuleFor(x => x.CurrentPositionY).NotNull().ExclusiveBetween(-1, 1001);
-            RuleFor(x => x.CurrentPositionX).NotNull().ExclusiveBetween(-1, 1001);
             RuleFor(x => x.IsNewLayer).NotEmpty();
             RuleFor(x => x.Key).NotNull().ExclusiveBetween(-1, 10001);
             RuleFor(x => x.Row).NotNull().ExclusiveBetween(-1, 1001);

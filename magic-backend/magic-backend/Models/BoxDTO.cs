@@ -8,6 +8,4 @@ public class BoxDTO
     public required string Color { get; set; }
     public int Row { get; set; }
     public bool IsNewLayer { get; set; }
-    public int CurrentPositionX { get; set; }
-    public int CurrentPositionY { get; set; }
 }

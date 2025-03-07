@@ -7,13 +7,18 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IE
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        var problemDetails = new ProblemDetails();
-        problemDetails.Instance = httpContext.Request.Path;
-        problemDetails.Status = httpContext.Response.StatusCode;
+        var problemDetails = new ProblemDetails
+        {
+            Title = "no magic today",
+            Instance = httpContext.Request.Path,
+            Status = httpContext.Response.StatusCode,
+            Detail = exception.Message,
+            Type = httpContext.Request.Method,
+        };
         
-        logger.LogError($"{problemDetails.Instance} {problemDetails.Status} {problemDetails.Detail} {exception.Message}");;
+        logger.LogError($"{problemDetails.Instance} {problemDetails.Status} {problemDetails.Detail} {exception.Message}");
         await httpContext.Response.WriteAsJsonAsync(problemDetails);
-
+        
         return true;
     }
 }
