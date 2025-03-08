@@ -94,11 +94,11 @@ public class BoxEndpoints
         public AddBoxValidator()
         { 
             RuleFor(x => x.Color).NotEmpty();
-            RuleFor(x => x.IsNewLayer).NotEmpty();
-            RuleFor(x => x.Key).NotNull().ExclusiveBetween(-1, 10001);
-            RuleFor(x => x.Row).NotNull().ExclusiveBetween(-1, 1001);
-            RuleFor(x => x.X).NotNull().ExclusiveBetween(-1, 1001);
-            RuleFor(x => x.Y).NotNull().ExclusiveBetween(-1, 1001);
+            RuleFor(x => x.IsNewLayer).NotNull().NotEmpty();
+            RuleFor(x => x.Key).NotNull().ExclusiveBetween(-1, Int32.MaxValue);
+            RuleFor(x => x.Row).NotNull().ExclusiveBetween(-1, Int32.MaxValue);
+            RuleFor(x => x.X).NotNull().ExclusiveBetween(-1, Int32.MaxValue);
+            RuleFor(x => x.Y).NotNull().ExclusiveBetween(-1, Int32.MaxValue);
         }
     }
 }
