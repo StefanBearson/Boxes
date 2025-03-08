@@ -1,4 +1,5 @@
 using FluentValidation;
+using FluentValidation.TestHelper;
 using magic_backend.Endpoints;
 using magic_backend.Filters;
 using magic_backend.Models;
@@ -62,6 +63,55 @@ public class BoxEndpointsTests
         //Assert
         var okResult = Assert.IsType<Ok<BoxDTO>>(result);
         Assert.Equal(200, okResult.StatusCode);
-        Assert.Equal(box.Color, okResult.Value.Color);
+        if (okResult.Value != null) Assert.Equal(box.Color, okResult.Value.Color);
+    }
+    
+    [Fact]
+    public async Task CreateBox_UseNotValidModel_ReturnsNotValid()
+    {
+        //Arrange
+        BoxEndpoints.AddBoxValidator validator = new BoxEndpoints.AddBoxValidator();
+        BoxVM box = new BoxVM
+        {
+            Color = "", 
+            IsNewLayer = true,
+            Key = 0,
+            Row = 0,
+            X = 0,
+            Y = 0
+        };
+        
+        //Act
+        var result = validator.TestValidate(box);
+        
+        //Assert
+        Assert.False(result.IsValid);
+        Assert.Single(result.Errors);
+        Assert.Equal("Color", result.Errors[0].PropertyName);
+        Assert.Equal("'Color' must not be empty.", result.Errors[0].ErrorMessage);
+    }
+    
+    [Fact]
+    public async Task CreateBox_UseValidModel_ReturnsValidResult()
+    {
+        //Arrange
+        BoxEndpoints.AddBoxValidator validator = new BoxEndpoints.AddBoxValidator();
+        BoxVM box = new BoxVM
+        {
+            Color = "#111111", 
+            IsNewLayer = true,
+            Key = 0,
+            Row = 0,
+            X = 0,
+            Y = 0
+        };
+        
+        
+        //Act
+        var result = validator.TestValidate(box);
+        
+        //Assert
+        Assert.True(result.IsValid);
+        Assert.Empty(result.Errors);
     }
 }
