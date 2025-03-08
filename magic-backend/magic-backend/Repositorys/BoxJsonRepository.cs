@@ -9,8 +9,7 @@ public class BoxJsonRepository(ILogger<BoxJsonRepository> logger) : IBoxReposito
     private static readonly string JsonFileName = "boxes.json";
     public async Task<string> CreateBox(BoxDTO box)
     {
-        //check if jsonfile exists otherwise create a empty json file
-        await CheckFileStatus();
+        await CheckFileStatus(JsonFileName);
 
         try
         {
@@ -30,12 +29,13 @@ public class BoxJsonRepository(ILogger<BoxJsonRepository> logger) : IBoxReposito
             logger.LogError(e, "Failed to add box");
             return await Task.FromResult(e.Message);
         }
+        
         return await Task.FromResult("Box added successfully");
     }
 
     public async Task<List<BoxDTO>> GetBoxes()
     {
-        await CheckFileStatus();
+        await CheckFileStatus(JsonFileName);
         string json = File.ReadAllText(JsonFileName);
         List<Box> boxes = JsonSerializer.Deserialize<List<Box>>(json);
         List<BoxDTO> boxDTOs = boxes.Select(b => b.ToDTO()).ToList();
@@ -44,16 +44,16 @@ public class BoxJsonRepository(ILogger<BoxJsonRepository> logger) : IBoxReposito
 
     public async Task<Task> RemoveAllBoxes()
     {
-        await CheckFileStatus();
+        await CheckFileStatus(JsonFileName);
         File.WriteAllText(JsonFileName, "[]");
-        return Task.FromResult("All boxes removed");
+        return Task.CompletedTask;
     }
     
-    private Task CheckFileStatus()
+    internal Task CheckFileStatus(string jsonFileName)
     {
-        if (!File.Exists(JsonFileName))
+        if (!File.Exists(jsonFileName))
         {
-            File.WriteAllText(JsonFileName, "[]");
+            File.WriteAllText(jsonFileName, "[]");
         }
         return Task.CompletedTask;
     }

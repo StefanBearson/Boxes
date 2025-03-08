@@ -21,5 +21,9 @@
         <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="magic-backend.Tests" />
+    </ItemGroup>
 
 </Project>
