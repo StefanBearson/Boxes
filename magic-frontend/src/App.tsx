@@ -16,6 +16,7 @@ function App() {
   const [grid, setGrid] = useState<BoxProps[][]>([]);
   const [snackbarData, setSnackbarData] = useState({isVisable: false, message: ""});
 
+  //Delete data from the API.
   const deleteSaveOnDb = async () => {
     try {
       await axios.delete("http://localhost:5052/box")
@@ -25,7 +26,7 @@ function App() {
     }
     
   }
-
+  //Load data from the API.
   const loadGridFromDb = async () => {
     try {
       const { data } = await axios.get("http://localhost:5052/box");
@@ -60,6 +61,7 @@ function App() {
     }
   }
 
+  //Post box to API for persistent storage.
   const postBox = async (box: BoxProps) => {
     try {
       setIsLoading(true);
@@ -75,6 +77,17 @@ function App() {
     }
   }
 
+  /**
+   * Places a box on the grid at the specified (x, y) coordinates.
+   * 
+   * @param x - The x-coordinate where the box should be placed.
+   * @param y - The y-coordinate where the box should be placed.
+   * 
+   * This function updates the current position state, determines if a new row
+   * should be added, and creates a new box with a random color. It then updates
+   * the grid state with the new box and posts the box data to a server or other
+   * external system.
+   */
   const placeBoxOnXY = (x: number, y: number) => {
     setCurrentPosition({ x, y });
 
@@ -100,6 +113,15 @@ function App() {
     postBox(box);
   }
 
+  /**
+   * Handles the logic for placing a box on the grid based on the current state.
+   * 
+   * - If the grid is empty, it clears the saved session, shows a snackbar message,
+   *   and places the first box at position (0, 0).
+   * - If a new layer is being added, it places the box at the end of the grid.
+   * - If the box can move down, it moves the box down by one position.
+   * - Otherwise, it moves the box left by one position.
+   */
   const theMagic = () => {
     if (!grid.length) {
       deleteSaveOnDb();
@@ -113,7 +135,7 @@ function App() {
       placeBoxOnXY(currentPosition.x, currentPosition.y - 1);
     }
   }
-
+  //helper functions that check whether it can be placed downwards.
   const canMoveDown = (): boolean => {
     return rows > (currentPosition.x);
   }
