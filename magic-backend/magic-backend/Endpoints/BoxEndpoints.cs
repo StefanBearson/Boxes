@@ -70,20 +70,20 @@ public class BoxEndpoints
             });
     }
     
-    public static async Task<IResult> CreateBox([FromBody] BoxVM box, IBoxService boxService)
+    internal static async Task<IResult> CreateBox([FromBody] BoxVM box, IBoxService boxService)
     {
         var boxDto = box.ToDTO();
         await boxService.CreateBox(boxDto);
         return Results.Ok(boxDto);
     }
     
-    public static async Task<IResult> GetBoxes(IBoxService boxService)
+    internal static async Task<IResult> GetBoxes(IBoxService boxService)
     {
         var result = boxService.GetBoxes();
         return Results.Ok(result.Result.Select(box => box.ToVM()));
     }
     
-    public static async Task<IResult> RemoveAllBoxes(IBoxService boxService)
+    internal static async Task<IResult> RemoveAllBoxes(IBoxService boxService)
     {
         await boxService.RemoveAllBoxes();
         return Results.Ok("All boxes removed");
