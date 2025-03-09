@@ -8,7 +8,6 @@ import Grid from "./components/Grid.tsx";
 import Snackbar from "./components/Snackbar.tsx";
 
 function App() {
-  
   const [isNewLayer, setIsNewLayer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [rows, setRows] = useState(1);
@@ -22,41 +21,33 @@ function App() {
       await axios.delete("http://localhost:5052/box")
       setSnackbarData({isVisable: true, message: "All boxes cleared!"});
     } catch {
-      setSnackbarData({isVisable: true, message: "No connection to the API!"});
+      setSnackbarData({isVisable: true, message: "No connection to the server!"});
     }
-    
   }
+
   //Load data from the API.
   const loadGridFromDb = async () => {
     try {
       const { data } = await axios.get("http://localhost:5052/box");
+
+      if (data.length === 0) {
+        setSnackbarData({isVisable: true, message: "No data found on the server!"});
+        return;
+      }
+
       const newGrid: BoxProps[][] = [];
+      
       data.forEach((box: BoxProps) => {
         if (!newGrid[box.y]) newGrid[box.y] = [];
         newGrid[box.y][box.x] = box;
       });
+
       setGrid(newGrid);
-
-      const last = data.sort((a: BoxProps, b: BoxProps) => b.key - a.key)[0];
-      const highestX = Math.max(...data.map((box: BoxProps) => box.x));
-      const numberOfRows = newGrid.length;
-      const numberOfCols = newGrid[0].length;
-      const numberOfColsInLastRow = newGrid[numberOfRows - 1].length;
-      const shouldBeNewLayer = numberOfCols === numberOfRows && numberOfColsInLastRow === numberOfRows;
-      const isOnLastRow = last.x === numberOfCols;
-
-      if (last) {
-        setRows(isOnLastRow ? highestX : highestX + 1);
-        setIsNewLayer(shouldBeNewLayer);
-        setCurrentPosition({ x: last.x, y: last.y });
-      } else {
-        setRows(1);
-        setIsNewLayer(false);
-        setCurrentPosition({ x: 0, y: 0 });
-      }
+      setStartPosition(newGrid, data);
       setSnackbarData({isVisable: true, message: "Last session loaded!"});
+
     } catch (error) {
-      setSnackbarData({isVisable: true, message: "No connection to the API!"});
+      setSnackbarData({isVisable: true, message: "No connection to the server!"});
       console.error(error);
     }
   }
@@ -70,10 +61,36 @@ function App() {
       });
       setSnackbarData({isVisable: true, message: "Box added!"});
     } catch (error) {
-      setSnackbarData({isVisable: true, message: "Box added! But not saved because no connection to the API!"});
+      setSnackbarData({isVisable: true, message: "Box added! But not saved because no connection to the server!"});
       console.error(error);
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  /**
+   * Sets the starting position for a new box in the grid after loading last session from the server.
+   *
+   * @param {BoxProps[][]} newGrid - The current state of the grid.
+   * @param {BoxProps[]} data - The array of box properties.
+   */
+  const setStartPosition = (newGrid: BoxProps[][],  data: BoxProps[]) => {
+    const last = data.sort((a: BoxProps, b: BoxProps) => b.key - a.key)[0];
+    const highestX = Math.max(...data.map((box: BoxProps) => box.x));
+    const numberOfRows = newGrid.length;
+    const numberOfCols = newGrid[0].length;
+    const numberOfColsInLastRow = newGrid[numberOfRows - 1].length;
+    const shouldBeNewLayer = numberOfCols === numberOfRows && numberOfColsInLastRow === numberOfRows;
+    const isOnLastRow = last.x === numberOfCols;
+
+    if (last) {
+      setRows(isOnLastRow ? highestX : highestX + 1);
+      setIsNewLayer(shouldBeNewLayer);
+      setCurrentPosition({ x: last.x, y: last.y });
+    } else {
+      setRows(1);
+      setIsNewLayer(false);
+      setCurrentPosition({ x: 0, y: 0 });
     }
   }
 
@@ -85,8 +102,8 @@ function App() {
    * 
    * This function updates the current position state, determines if a new row
    * should be added, and creates a new box with a random color. It then updates
-   * the grid state with the new box and posts the box data to a server or other
-   * external system.
+   * the grid state with the new box and posts the box data to a server
+   * 
    */
   const placeBoxOnXY = (x: number, y: number) => {
     setCurrentPosition({ x, y });
@@ -135,6 +152,7 @@ function App() {
       placeBoxOnXY(currentPosition.x, currentPosition.y - 1);
     }
   }
+
   //helper functions that check whether it can be placed downwards.
   const canMoveDown = (): boolean => {
     return rows > (currentPosition.x);
