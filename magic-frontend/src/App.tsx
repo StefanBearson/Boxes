@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { getRandomColor } from './tools/randomColors'
@@ -14,6 +14,11 @@ function App() {
   const [currentPosition, setCurrentPosition] = useState({x : 0, y : 0});
   const [grid, setGrid] = useState<BoxProps[][]>([]);
   const [snackbarData, setSnackbarData] = useState({isVisable: false, message: ""});
+
+  useEffect(()=>{
+   loadGridFromDb();
+  }, [])
+
 
   //Delete data from the API.
   const deleteSaveOnDb = async () => {
@@ -172,10 +177,6 @@ function App() {
     setRows(1)
   }
 
-  const handleLoadLastSessionClick = () => {
-    loadGridFromDb();
-  }
-
   const hideSnackbar = () => {setSnackbarData({isVisable: false, message: ""})}
 
   return (
@@ -184,7 +185,6 @@ function App() {
           isLoading={isLoading}
           handleAddBoxClick={handleAddBoxClick}
           handleClearAllBoxesClick={handleClearAllBoxesClick}
-          handleLoadLastSessionClick={handleLoadLastSessionClick}
       />
       <Grid grid={grid} />
       <Snackbar message={snackbarData.message} isVisible={snackbarData.isVisable} onClose={hideSnackbar} />
