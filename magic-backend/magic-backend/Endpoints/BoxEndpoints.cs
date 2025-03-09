@@ -16,7 +16,7 @@ public class BoxEndpoints
 
         group.MapGet("/box", GetBoxes)
             .WithName("GetBoxes")
-            .WithDescription("Get all boxes from the database.")
+            .WithDescription("GET endpoint for retrieving all boxes from the database.")
             .WithOpenApi(operation => new(operation)
             {
                 Summary = "Get all boxes",
@@ -29,7 +29,7 @@ public class BoxEndpoints
             });
         group.MapPost("/box", CreateBox)
             .WithName("AddBox")
-            .WithDescription("Add a new box to the database.")
+            .WithDescription("POST endpoint for creating a new box in the database.")
             .WithOpenApi(operation => new(operation)
             {
                 Summary = "Create a new box",
@@ -58,7 +58,7 @@ public class BoxEndpoints
             .ProducesValidationProblem();
         group.MapDelete("/box", RemoveAllBoxes)
             .WithName("RemoveAllBoxes")
-            .WithDescription("Remove all boxes from the database.").WithOpenApi(operation => new(operation)
+            .WithDescription("DELETE endpoint for removing all boxes from the database.").WithOpenApi(operation => new(operation)
             {
                 Summary = "Remove all the boxes",
                 Description = "This will remove all the saved boxes from the database. This is not revocable",
@@ -79,8 +79,8 @@ public class BoxEndpoints
     
     internal static async Task<IResult> GetBoxes(IBoxService boxService)
     {
-        var result = boxService.GetBoxes();
-        return Results.Ok(result.Result.Select(box => box.ToVM()));
+        var result = await boxService.GetBoxes();
+        return Results.Ok(result.Select(box => box.ToVM()));
     }
     
     internal static async Task<IResult> RemoveAllBoxes(IBoxService boxService)
