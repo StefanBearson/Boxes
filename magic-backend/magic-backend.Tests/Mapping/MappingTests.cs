@@ -60,6 +60,7 @@ public class MappingTests
     [Fact]
     public void DTOToEntity_Mapping_ReturnsCorrectBox()
     {
+        // Arrange
         var boxDTO = new BoxDTO
         {
             Key = 1,
@@ -69,9 +70,11 @@ public class MappingTests
             Row = 2,
             IsNewLayer = true
         };
-
+        
+        // Act
         var result = boxDTO.ToEntity();
 
+        // Assert
         Assert.Equal(1, result.Key);
         Assert.Equal(10, result.X);
         Assert.Equal(20, result.Y);
@@ -83,6 +86,7 @@ public class MappingTests
     [Fact]
     public void DTOToVM_Mapping_ReturnsCorrectBoxVM()
     {
+        // Arrange
         var boxDTO = new BoxDTO
         {
             Key = 1,
@@ -92,9 +96,11 @@ public class MappingTests
             Row = 2,
             IsNewLayer = true
         };
-
+        
+        // Act
         var result = boxDTO.ToVM();
 
+        // Assert
         Assert.Equal(1, result.Key);
         Assert.Equal(10, result.X);
         Assert.Equal(20, result.Y);
@@ -106,6 +112,7 @@ public class MappingTests
     [Fact]
     public void EntityToDTO_Mapping_ReturnsCorrectBoxDTO()
     {
+        // Arrange
         var box = new Box
         {
             Key = 1,
@@ -116,8 +123,10 @@ public class MappingTests
             IsNewLayer = true
         };
 
+        // Act
         var result = box.ToDTO();
 
+        // Assert
         Assert.Equal(1, result.Key);
         Assert.Equal(10, result.X);
         Assert.Equal(20, result.Y);
