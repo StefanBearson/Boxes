@@ -56,15 +56,15 @@ public static class BoxEndpoints
             })
             .AddEndpointFilter<ValidationFilter<BoxVM>>()
             .ProducesValidationProblem();
-        group.MapDelete("/box", RemoveAllBoxes)
-            .WithName("RemoveAllBoxes")
+        group.MapDelete("/box", DeleteAllBoxes)
+            .WithName("DeleteAllBoxes")
             .WithDescription("DELETE endpoint for removing all boxes from the database.").WithOpenApi(operation => new(operation)
             {
-                Summary = "Remove all the boxes",
-                Description = "This will remove all the saved boxes from the database. This is not revocable",
+                Summary = "Delete all the boxes",
+                Description = "This will delete all the saved boxes from the database. This is not revocable",
                 Responses =
                 {
-                    ["200"] = new OpenApiResponse { Description = "Removes all the boxes returned successfully." },
+                    ["200"] = new OpenApiResponse { Description = "Delete all the boxes returned successfully." },
                     ["400"] = new OpenApiResponse { Description = "The request is invalid." }
                 }
             });
@@ -83,10 +83,10 @@ public static class BoxEndpoints
         return Results.Ok(result.Select(box => box.ToVM()));
     }
     
-    internal static async Task<IResult> RemoveAllBoxes(IBoxService boxService)
+    internal static async Task<IResult> DeleteAllBoxes(IBoxService boxService)
     {
-        await boxService.RemoveAllBoxes();
-        return Results.Ok("All boxes removed");
+        var message = await boxService.DeleteAllBoxes();
+        return Results.Ok(message);
     }
     
     public class AddBoxValidator : AbstractValidator<BoxVM>

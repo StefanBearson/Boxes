@@ -37,16 +37,16 @@ public class BoxJsonRepository(ILogger<BoxJsonRepository> logger) : IBoxReposito
     {
         await CheckFileStatus(JsonFileName);
         string json = File.ReadAllText(JsonFileName);
-        List<Box> boxes = JsonSerializer.Deserialize<List<Box>>(json);
+        List<Box> boxes = JsonSerializer.Deserialize<List<Box>>(json) ?? new List<Box>();
         List<BoxDTO> boxDTOs = boxes.Select(b => b.ToDTO()).ToList();
         return await Task.FromResult(boxDTOs);
     }
 
-    public async Task<Task> RemoveAllBoxes()
+    public async Task<string> DeleteAllBoxes()
     {
         await CheckFileStatus(JsonFileName);
         File.WriteAllText(JsonFileName, "[]");
-        return Task.CompletedTask;
+        return await Task.FromResult("All boxes removed");
     }
     
     internal Task CheckFileStatus(string jsonFileName)

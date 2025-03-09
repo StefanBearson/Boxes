@@ -6,5 +6,5 @@ public interface IBoxRepository
 {
     Task<string> CreateBox(BoxDTO box);
     Task<List<BoxDTO>> GetBoxes();
-    Task<Task> RemoveAllBoxes();
+    Task<string> DeleteAllBoxes();
 }

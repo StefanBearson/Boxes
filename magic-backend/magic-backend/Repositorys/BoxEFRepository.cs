@@ -26,11 +26,11 @@ public class BoxEFRepository(BoxDbContext context, ILogger<BoxService> logger) :
         return Task.FromResult(boxes);
     }
     
-    public async Task<Task> RemoveAllBoxes()
+    public async Task<string> DeleteAllBoxes()
     {
         context.Box.RemoveRange(context.Box);
         context.SaveChanges();
         
-        return Task.CompletedTask;
+        return await Task.FromResult("All boxes removed");
     }
 }

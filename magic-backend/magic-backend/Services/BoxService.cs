@@ -5,7 +5,7 @@ using magic_backend.Repositorys;
 
 namespace magic_backend.Services;
 
-public class BoxService(IBoxRepository repository, ILogger<BoxService> logger) : IBoxService
+public class BoxService(IBoxRepository repository) : IBoxService
 {
     public Task<string> CreateBox(BoxDTO box)
     {
@@ -19,9 +19,9 @@ public class BoxService(IBoxRepository repository, ILogger<BoxService> logger) :
         return boxes;
     }
     
-    public Task RemoveAllBoxes()
+    public Task<string> DeleteAllBoxes()
     {
-        var result = repository.RemoveAllBoxes();
-        return result.Result;
+        var result = repository.DeleteAllBoxes();
+        return result;
     }
 }

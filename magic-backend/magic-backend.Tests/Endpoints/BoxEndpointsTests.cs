@@ -21,10 +21,10 @@ public class BoxEndpointsTests
     {
         //Arrange
         var mockBoxService = Substitute.For<IBoxService>();
-        mockBoxService.RemoveAllBoxes().Returns(Task.CompletedTask);
+        mockBoxService.DeleteAllBoxes().Returns(Task.FromResult("All boxes removed"));
 
         //Act
-        var result = await BoxEndpoints.RemoveAllBoxes(mockBoxService);
+        var result = await BoxEndpoints.DeleteAllBoxes(mockBoxService);
 
         //Assert
         var okResult = Assert.IsType<Ok<string>>(result);
