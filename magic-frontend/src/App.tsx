@@ -120,7 +120,7 @@ function App() {
       key: grid.flat().length,
       x,
       y,
-      color: getRandomColor(),
+      color: getColorButNotePreviousColor(),
       row: rows,
       isNewLayer,
     };
@@ -134,6 +134,19 @@ function App() {
 
     postBox(box);
   }
+
+  //get not the same color as the last box
+  const getColorButNotePreviousColor = (): string => {
+    let newColor: string;
+    const previousColor = grid.flat().length !== 0 ? grid.flat()[grid.flat().length - 1].color : '#00000';
+
+    do {
+      newColor = getRandomColor();
+    } while (previousColor === newColor);
+
+    return newColor;
+  }
+
 
   /**
    * Handles the logic for placing a box on the grid based on the current state.

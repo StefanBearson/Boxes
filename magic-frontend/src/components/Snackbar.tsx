@@ -3,7 +3,6 @@ import { SnackbarProps } from '../interfaces/SnackBarProps';
 
 const Snackbar: React.FC<SnackbarProps> = ({ message, isVisible, onClose }) => {
     useEffect(() => {
-        console.log(isVisible);
         if (isVisible) {
             const timer = setTimeout(onClose, 3000); // Auto-hide after 3 seconds
             return () => clearTimeout(timer);
