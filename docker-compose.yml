@@ -1,0 +1,29 @@
+services:
+  magic-backend:
+    image: magic-backend
+    build:
+      context: ./
+      dockerfile: ./magic-backend/magic-backend/Dockerfile
+    ports:
+      - "5052:8080"
+    networks:
+      - internal-network
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - UseJsonAsDatabase=false
+  
+  magic-frontend:
+    image: magic-frontend
+    build:
+      context: .
+      dockerfile: ./magic-frontend/Dockerfile
+    ports: 
+      - "5173:80"
+    networks:
+      - internal-network
+    depends_on:
+      - magic-backend
+
+networks:
+  internal-network:
+    driver: bridge
