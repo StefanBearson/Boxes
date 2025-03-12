@@ -8,6 +8,8 @@ import Grid from "./components/Grid.tsx";
 import Snackbar from "./components/Snackbar.tsx";
 
 function App() {
+  const BASE_URL:string = "http://localhost:5052";
+
   const [isNewLayer, setIsNewLayer] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [rows, setRows] = useState(1);
@@ -23,7 +25,7 @@ function App() {
   //Delete data from the API.
   const deleteSaveOnDb = async () => {
     try {
-      await axios.delete("http://localhost:5052/box")
+      await axios.delete(BASE_URL + "/box")
       setSnackbarData({isVisable: true, message: "All boxes cleared!"});
     } catch {
       setSnackbarData({isVisable: true, message: "No connection to the server!"});
@@ -33,7 +35,7 @@ function App() {
   //Load data from the API.
   const loadGridFromDb = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5052/box");
+      const { data } = await axios.get(BASE_URL + "/box");
 
       if (data.length === 0) {
         setSnackbarData({isVisable: true, message: "No data found on the server!"});
@@ -61,7 +63,7 @@ function App() {
   const postBox = async (box: BoxProps) => {
     try {
       setIsLoading(true);
-      await axios.post("http://localhost:5052/box", box, {
+      await axios.post(BASE_URL + "/box", box, {
         headers: { 'Content-Type': 'application/json' }
       });
       setSnackbarData({isVisable: true, message: "Box added!"});
