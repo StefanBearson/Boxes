@@ -100,7 +100,7 @@ public static class BoxEndpoints
         public AddBoxValidator()
         { 
             RuleFor(x => x.Color).NotEmpty().MinimumLength(4).MaximumLength(7).Matches("^[a-zA-Z0-9#]*$");
-            RuleFor(x => x.IsNewLayer).NotNull().NotEmpty();
+            RuleFor(x => x.IsNewLayer);
             RuleFor(x => x.Key).NotNull().ExclusiveBetween(-1, Int32.MaxValue);
             RuleFor(x => x.Row).NotNull().ExclusiveBetween(-1, Int32.MaxValue);
             RuleFor(x => x.X).NotNull().ExclusiveBetween(-1, Int32.MaxValue);
