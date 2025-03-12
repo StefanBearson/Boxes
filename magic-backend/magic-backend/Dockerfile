@@ -2,15 +2,16 @@
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
+
+
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-ARG BUILD_CONFIGURATION=Release
+ARG BUILD_CONFIGURATION=Debug
 WORKDIR /src
-COPY ["magic-backend/magic-backend.csproj", "magic-backend/"]
-RUN dotnet restore "magic-backend/magic-backend.csproj"
+COPY ["magic-backend/magic-backend/magic-backend.csproj", "magic-backend/magic-backend/"]
+RUN dotnet restore "magic-backend/magic-backend/magic-backend.csproj"
 COPY . .
-WORKDIR "/src/magic-backend"
+WORKDIR "/src/magic-backend/magic-backend"
 RUN dotnet build "magic-backend.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

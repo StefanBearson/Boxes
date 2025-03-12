@@ -15,15 +15,15 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.2" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
     </ItemGroup>
-
+    
+    <ItemGroup>
+        <InternalsVisibleTo Include="magic-backend.Tests" />
+    </ItemGroup>
+    
     <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
-    </ItemGroup>
-    
-    <ItemGroup>
-        <InternalsVisibleTo Include="magic-backend.Tests" />
     </ItemGroup>
 
 </Project>
