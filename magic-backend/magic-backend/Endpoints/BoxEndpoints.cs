@@ -49,7 +49,7 @@ public static class BoxEndpoints
                 },
                 Responses =
                 {
-                    ["200"] = new OpenApiResponse { Description = "Add box returned successfully." },
+                    ["201"] = new OpenApiResponse { Description = "Add box successfully." },
                     ["400"] = new OpenApiResponse { Description = "The request is invalid." },
                     ["500"] = new OpenApiResponse { Description = "An unexpected error occurred." }
                 }
@@ -74,7 +74,7 @@ public static class BoxEndpoints
     {
         var boxDto = box.ToDTO();
         await boxService.CreateBox(boxDto);
-        return Results.Ok(boxDto);
+        return Results.Created("", boxDto);
     }
     
     internal static async Task<IResult> GetBoxes(IBoxService boxService)
@@ -92,13 +92,14 @@ public static class BoxEndpoints
     public class AddBoxValidator : AbstractValidator<BoxVM>
     {
         // Ensures that the Color property is not empty, has a maximum length of 7 characters,
+        // has a minimum length of 4 characters,
         // and matches the regular expression pattern allowing only alphanumeric characters and '#'.
         // This Sanitizes the input.
         // Ensures that the Row, X, and Y properties are not null and are greater than or equal to 0.
         // Ensures that the Key, Row, X, and Y property is not null and is greater than or equal to 0.
         public AddBoxValidator()
         { 
-            RuleFor(x => x.Color).NotEmpty().MaximumLength(7).Matches("^[a-zA-Z0-9#]*$");
+            RuleFor(x => x.Color).NotEmpty().MinimumLength(4).MaximumLength(7).Matches("^[a-zA-Z0-9#]*$");
             RuleFor(x => x.IsNewLayer).NotNull().NotEmpty();
             RuleFor(x => x.Key).NotNull().ExclusiveBetween(-1, Int32.MaxValue);
             RuleFor(x => x.Row).NotNull().ExclusiveBetween(-1, Int32.MaxValue);

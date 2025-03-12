@@ -14,7 +14,7 @@ public class MappingTests
             Key = 1,
             X = 10,
             Y = 20,
-            Color = "Red ",
+            Color = "#111111 ",
             Row = 2,
             IsNewLayer = true
         };
@@ -26,35 +26,9 @@ public class MappingTests
         Assert.Equal(1, result.Key);
         Assert.Equal(10, result.X);
         Assert.Equal(20, result.Y);
-        Assert.Equal("Red", result.Color);
+        Assert.Equal("#111111", result.Color);
         Assert.Equal(2, result.Row);
         Assert.True(result.IsNewLayer);
-    }
-
-    [Fact]
-    public void VMToDTO_Mapping_HandlesNullValues()
-    {
-        // Arrange
-        var boxVM = new BoxVM
-        {
-            Key = null,
-            X = null,
-            Y = null,
-            Color = " Blue ",
-            Row = null,
-            IsNewLayer = null
-        };
-
-        // Act
-        var result = boxVM.ToDTO();
-
-        // Assert
-        Assert.Equal(0, result.Key);
-        Assert.Equal(0, result.X);
-        Assert.Equal(0, result.Y);
-        Assert.Equal("Blue", result.Color);
-        Assert.Equal(0, result.Row);
-        Assert.False(result.IsNewLayer);
     }
     
     [Fact]
@@ -66,7 +40,7 @@ public class MappingTests
             Key = 1,
             X = 10,
             Y = 20,
-            Color = "Red",
+            Color = "#111111",
             Row = 2,
             IsNewLayer = true
         };
@@ -78,7 +52,7 @@ public class MappingTests
         Assert.Equal(1, result.Key);
         Assert.Equal(10, result.X);
         Assert.Equal(20, result.Y);
-        Assert.Equal("Red", result.Color);
+        Assert.Equal("#111111", result.Color);
         Assert.Equal(2, result.Row);
         Assert.True(result.IsNewLayer);
     }
@@ -92,7 +66,7 @@ public class MappingTests
             Key = 1,
             X = 10,
             Y = 20,
-            Color = "Red",
+            Color = "#111111",
             Row = 2,
             IsNewLayer = true
         };
@@ -104,7 +78,7 @@ public class MappingTests
         Assert.Equal(1, result.Key);
         Assert.Equal(10, result.X);
         Assert.Equal(20, result.Y);
-        Assert.Equal("Red", result.Color);
+        Assert.Equal("#111111", result.Color);
         Assert.Equal(2, result.Row);
         Assert.True(result.IsNewLayer);
     }
@@ -118,7 +92,7 @@ public class MappingTests
             Key = 1,
             X = 10,
             Y = 20,
-            Color = "Red",
+            Color = "#111111",
             Row = 2,
             IsNewLayer = true
         };
@@ -130,7 +104,7 @@ public class MappingTests
         Assert.Equal(1, result.Key);
         Assert.Equal(10, result.X);
         Assert.Equal(20, result.Y);
-        Assert.Equal("Red", result.Color);
+        Assert.Equal("#111111", result.Color);
         Assert.Equal(2, result.Row);
         Assert.True(result.IsNewLayer);
     }

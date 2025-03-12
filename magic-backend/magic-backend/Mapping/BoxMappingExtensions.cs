@@ -8,12 +8,12 @@ public static class BoxMappingExtensions
     {
         return new BoxDTO
         {
-            Key = box.Key ?? 0,
-            X = box.X ?? 0,
-            Y = box.Y ?? 0,
+            Key = box.Key,
+            X = box.X,
+            Y = box.Y,
             Color = box.Color.Trim(),
-            Row = box.Row ?? 0,
-            IsNewLayer = box.IsNewLayer ?? false
+            Row = box.Row,
+            IsNewLayer = box.IsNewLayer 
         };
     }
     

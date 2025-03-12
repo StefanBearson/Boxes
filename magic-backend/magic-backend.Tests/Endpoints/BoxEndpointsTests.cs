@@ -61,8 +61,8 @@ public class BoxEndpointsTests
         var result = await BoxEndpoints.CreateBox(box, mockBoxService);
         
         //Assert
-        var okResult = Assert.IsType<Ok<BoxDTO>>(result);
-        Assert.Equal(200, okResult.StatusCode);
+        var okResult = Assert.IsType<Created<BoxDTO>>(result);
+        Assert.Equal(201, okResult.StatusCode);
         if (okResult.Value != null) Assert.Equal(box.Color, okResult.Value.Color);
     }
     
@@ -86,9 +86,9 @@ public class BoxEndpointsTests
         
         //Assert
         Assert.False(result.IsValid);
-        Assert.Single(result.Errors);
         Assert.Equal("Color", result.Errors[0].PropertyName);
         Assert.Equal("'Color' must not be empty.", result.Errors[0].ErrorMessage);
+        Assert.Equal("The length of 'Color' must be at least 4 characters. You entered 0 characters.", result.Errors[1].ErrorMessage);
     }
     
     [Fact]
